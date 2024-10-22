@@ -37,6 +37,7 @@
  * Program entry point
  */
 val players = mutableListOf<String>()
+val gameGrid = mutableListOf<String>()
 
 fun main() {
     // Welcome message
@@ -87,6 +88,9 @@ fun startIntro() {
     println("---------------------------------------------------------------------------------------------------------------------------------------")
     println()
 
+    val player1 : String = players.first()
+    val player2 : String = players.last()
+
     println("Imagine a scenario where $player1 just lost their job and they are really in need of a lot of money, an amount that would\n" +
             "turn $player1's life around forever without the need to worry about finance again. $player1 recently found a very old looking map\n" +
             "in their grandparent's basement in a small wooden chest that seemed to be left unbothered for centuries.\n" +
@@ -97,6 +101,7 @@ fun startIntro() {
             "to the cave that you are worthy to receive the coin! This is your last shot to wealthiness, and you must win this!")
 
     println()
+    print("Press Enter to continue...")
     readln()
     caveSelector()
     return
@@ -104,17 +109,18 @@ fun startIntro() {
 
 /** skip intro */
 fun showNames(players: MutableList<String>) {
-    println("---------------------------------------------------------------------------------------------------------------------------------------")
-    println()
 
     println("Enter players name")
-    println("Player 1 : ")
+    print("Player 1 : ")
     val player1 : String = readln()
-    println("Player 2 : ")
+    players.add(player1)
+    print("Player 2 : ")
     val player2 : String = readln()
-    println()
+    players.add(player2)
 
-    return
+    println()
+    println("---------------------------------------------------------------------------------------------------------------------------------------")
+    println()
 }
 
 /** View Rules! */
@@ -151,5 +157,9 @@ fun rules() {
 
 /** grid and coin selector  */
 fun caveSelector() {
+    println()
+    println("---------------------------------------------------------------------------------------------------------------------------------------")
+    println()
+
     println("Select your cave!")
 }
