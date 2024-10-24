@@ -169,7 +169,7 @@ fun setupGame(grid: MutableList<String>) {
 
         // option 1
         print("[1] SMALL Cave (12 squares & 5 coins):")
-        println(" $goldCoin $silverCoin $silverCoin $silverCoin ")
+        println(" $goldCoin $silverCoin $silverCoin $silverCoin $silverCoin ")
         println()
         // option 2
         print("[2] THE Cave   (20 squares & 6 coins):")
@@ -229,20 +229,37 @@ fun setupGame(grid: MutableList<String>) {
 }
 
 fun showCave(grid: MutableList<String>) {
-    // Build Top (first line)
+    //index box labelling
+    for (number in grid.indices) {
+        print("┊   $number   ")
+    }
+    println("┊")
+
+
+    // Build Top (of game grid)
     print("┌")
-    print("───────┬".repeat(grid.size))
+    print("───────┬".repeat(grid.size-1))
+    print("───────")
     println("┐")
 
+    //second line of table where coin are display
     for (square in grid) {
 
         print("|   $square   ")
     }
-    println()
+    println("|")
+
+    //bottom line of table
+     print("└")
+    print("───────┴".repeat(grid.size-1))
+    print("───────")
+    println("┘")
+
 }
 
 fun playGame(grid: MutableList<String>) {
     showCave(grid)
+
 }
 
 //    println("[2] THE Cave (20 squares & 6 coins):")
@@ -250,3 +267,11 @@ fun playGame(grid: MutableList<String>) {
 //            "│      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │\n" +
 //            "└──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┘\n" +
 //            "│  1   │   2  │   3  │   4  │   5  │   6  │   7  │   8  │   9  │  10  │  11  │  12  │  13  │  14  │  15  │  16  │  17  │  18  │  19  │  20  │")
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//            "│  1   │   2  │   3  │   4  │   5  │   6  │   7  │   8  │   9  │  10  │  11  │  12  │  13  │  14  │  15  │  16  │  17  │  18  │  19  │  20  │")
+//            "┌──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┐\n" +
+//            "│      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │\n" +
+//            "└──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┘\n" +
+
