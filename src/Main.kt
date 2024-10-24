@@ -36,25 +36,33 @@
 /**
  * Program entry point
  */
-val players = mutableListOf<String>()
-val gameGrid = mutableListOf<String>()
+val silverCoin = "●".grey()
+val goldCoin = "●".yellow()
+val space = " "
+
 
 fun main() {
     // Welcome message
     println("Welcome to 'Ancient Gold Coin' the Game!")
+    println()
 
-    showNames(players)
+    val players = mutableListOf<String>()
+    val grid = mutableListOf<String>()
 
+    while (true) {
     // Get action choice from user
     val option = getUserAction()
-    when (option) {
-        'P' -> startIntro()       // start with introduction
-        'S' -> showNames(players)        // Start without introduction
-        'R' -> rules()            // view rules
-        //'Q' -> break
-
+        when (option) {
+            'P' -> {
+                getNames(players)
+                startIntro(players)     // start with introduction
+                setupGame(grid)
+                playGame(grid)
+            }
+            'R' -> rules()                   // view rules
+            'Q' -> break                     // Exit
+        }
     }
-
 
 }
 
@@ -69,8 +77,8 @@ fun getUserAction(): Char {
         // Show options
         println("MENU")
         println(" [P] Play!")
-        println(" [S] Skip Introduction")
         println(" [R] View Rules")
+        println(" [Q] Quit")
         print("Option: ")
 
         // Get user choice
@@ -83,13 +91,13 @@ fun getUserAction(): Char {
     }
 }
 
-fun startIntro() {
+fun startIntro(players: MutableList<String>) {
     println()
     println("---------------------------------------------------------------------------------------------------------------------------------------")
     println()
 
-    val player1 : String = players.first()
-    val player2 : String = players.last()
+    val player1 : String = players[0]
+    val player2 : String = players[1]
 
     println("Imagine a scenario where $player1 just lost their job and they are really in need of a lot of money, an amount that would\n" +
             "turn $player1's life around forever without the need to worry about finance again. $player1 recently found a very old looking map\n" +
@@ -97,19 +105,18 @@ fun startIntro() {
             "As this is $player1's chance to change your life around, they think it is worth the risk to follow that map and find\n" +
             "what it is hiding... After a long struggle, in a cave, $player1 manage to find what seemed to be the treasure that the map is\n" +
             "leading you to, the 'Ancient Gold Coin'. However, there's always a catch. A silhouette slowly appear which seem to be $player2!\n" +
-            "Watch out, both of you now have to compete and prove yourself\n" +
-            "to the cave that you are worthy to receive the coin! This is your last shot to wealthiness, and you must win this!")
+            "Watch out, both of you now have to compete and prove yourself to the cave that you are worthy to receive the coin!\n" +
+            "This is your last shot to wealthiness, and you must win this!")
 
     println()
     print("Press Enter to continue...")
     readln()
-    caveSelector()
-    return
 }
 
 /** skip intro */
-fun showNames(players: MutableList<String>) {
+fun getNames(players: MutableList<String>) {
 
+    println()
     println("Enter players name")
     print("Player 1 : ")
     val player1 : String = readln()
@@ -117,10 +124,6 @@ fun showNames(players: MutableList<String>) {
     print("Player 2 : ")
     val player2 : String = readln()
     players.add(player2)
-
-    println()
-    println("---------------------------------------------------------------------------------------------------------------------------------------")
-    println()
 }
 
 /** View Rules! */
@@ -142,24 +145,108 @@ fun rules() {
             "To win, you have to be the first to successfully removed the 'Ancient Gold Coin'!")
 
     println()
+    print("Press Enter to return...")
+    readln()
+    println()
     println("---------------------------------------------------------------------------------------------------------------------------------------")
     println()
-
-
-    val option = getUserAction()
-    when (option) {
-        'P' -> startIntro()       // start with introduction
-        'S' -> showNames(players)        // Start without introduction
-        'R' -> rules()            // view rules
-    }
 
 }
 
 /** grid and coin selector  */
-fun caveSelector() {
+fun setupGame(grid: MutableList<String>) {
     println()
     println("---------------------------------------------------------------------------------------------------------------------------------------")
     println()
 
-    println("Select your cave!")
+    var gridSize: Int = 0
+    var coinsNumber: Int = 0
+
+    while(true) {
+        println("Select your cave!")
+        println("Note: Recommended Cave is 'THE Cave'!")
+        println()
+
+        // option 1
+        print("[1] SMALL Cave (12 squares & 5 coins):")
+        println(" $goldCoin $silverCoin $silverCoin $silverCoin ")
+        println()
+        // option 2
+        print("[2] THE Cave   (20 squares & 6 coins):")
+        println(" $goldCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin")
+        println()
+        // option 3
+        print("[3] BIG Cave   (25 squares & 8 coins):")
+        println(" $goldCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin")
+        println()
+
+        print("Option: ")
+        val caveOption: Int = readln().toInt()
+
+        when (caveOption) {
+            1 -> {
+                gridSize = 12
+                coinsNumber = 5
+                break
+            }
+
+            2 -> {
+                gridSize = 20
+                coinsNumber = 6
+                break
+            }
+
+            3 -> {
+                gridSize = 25
+                coinsNumber = 8
+                break
+            }
+            //this only check for Int but not String!!!!
+            else -> {
+                println("That cave does not exist!")
+            }
+        }
+    }
+
+    // Build the grid
+    for (i in 0 until gridSize) {
+        grid.add(space)
+    }
+
+    // Silver coins
+    for (i in 0 until coinsNumber - 1) {
+        val position = (1 until gridSize).random()
+        grid[position] = silverCoin
+    }
+
+    // Gold coin
+    val position = (1 until gridSize).random()
+    grid[position] = goldCoin
+
+    println()
+    println("---------------------------------------------------------------------------------------------------------------------------------------")
+    println()
 }
+
+fun showCave(grid: MutableList<String>) {
+    // Build Top (first line)
+    print("┌")
+    print("───────┬".repeat(grid.size))
+    println("┐")
+
+    for (square in grid) {
+
+        print("|   $square   ")
+    }
+    println()
+}
+
+fun playGame(grid: MutableList<String>) {
+    showCave(grid)
+}
+
+//    println("[2] THE Cave (20 squares & 6 coins):")
+//    println("┌──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┐\n" +
+//            "│      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │      │\n" +
+//            "└──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┘\n" +
+//            "│  1   │   2  │   3  │   4  │   5  │   6  │   7  │   8  │   9  │  10  │  11  │  12  │  13  │  14  │  15  │  16  │  17  │  18  │  19  │  20  │")
