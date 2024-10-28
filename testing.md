@@ -36,7 +36,13 @@ To win, you have to be the first to successfully removed the 'Ancient Gold Coin'
 
 The following game features / functionality and player actions will need to be tested:
 
-- FUNCTIONALITY / FEATURE / ACTION TO TEST
+- Main Menu: be able to withstand invalid input + allows player to select each option without errors
+     - Action to test -> 
+       - Try inputting invalid inputs 
+       - Try inputting nothing at all
+       - Try inputting each option to check if it leads to the correct flow of programme. 
+       
+
 - FUNCTIONALITY / FEATURE / ACTION TO TEST
 - FUNCTIONALITY / FEATURE / ACTION TO TEST
 - FUNCTIONALITY / FEATURE / ACTION TO TEST
