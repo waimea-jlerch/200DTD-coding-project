@@ -3,19 +3,32 @@
 ## Game Description
 
 The project involves the programming of a two-player game.
-
-BRIEF DESCRIPTION OF GAME HERE
-BRIEF DESCRIPTION OF GAME HERE
-BRIEF DESCRIPTION OF GAME HERE
+It is a game about competing to obtain the 'Ancient gold coin' before your opponent
+to gain your shortcut to long-lasting wealthiness!
+This game is played on a one-dimensional grid of squares.
+A certain number coins are randomly placed onto the grid.
+Most of the coins are normal coin that are worthless except
+for one of the coins that is the one and only 'Ancient Gold Coin'.
+Players will take turns move the coins from right to left.
+When a coin is at the most left grid, it can be removed of the grid.
+First player to remove the 'Ancient Gold Coin' wins!
 
 ### Game Features and Rules
 
 The game has the following features and/or rules:
 
-- GAME FEATURE / RULE
-- GAME FEATURE / RULE
-- GAME FEATURE / RULE
-- GAME FEATURE / RULE
+- The way of proving yourself to the cave and how to win (rules):
+
+This game is a two player game played on a one-dimensional grid of squares. A certain number coins are randomly
+placed onto the grid. Most of the coins are normal coin that are worthless except for one of the coins that is the
+one and only 'Ancient Gold Coin'. Players will take turns to play. Each turn consists of only 1 move.
+The available moves that a player can do are:
+1) Slide any coin any number of spaces to the *left* on a condition that:
+    - A coin cannot jump over another coin
+    - It does not share the same square with another coin
+2) Remove a coin when it is placed/moved to the most-left grid / in position 1
+
+To win, you have to be the first to successfully removed the 'Ancient Gold Coin'!
 
 ---
 

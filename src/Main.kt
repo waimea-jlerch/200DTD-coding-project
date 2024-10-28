@@ -169,7 +169,7 @@ fun rules() {
             "one and only 'Ancient Gold Coin'. Players will take turns to play. Each turn consists of only 1 move.\n" +
             "The available moves that a player can do are:\n" +
             "1) Slide any coin any number of spaces to the *left* on a condition that:\n" +
-            "      - A coin cannot jumped over another coin\n" +
+            "      - A coin cannot jump over another coin\n" +
             "      - It does not share the same square with another coin\n" +
             "2) Remove a coin when it is placed/moved to the most-left grid / in position 1\n" +
             "\n" +

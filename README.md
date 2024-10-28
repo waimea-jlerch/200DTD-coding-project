@@ -27,7 +27,7 @@ placed onto the grid. Most of the coins are normal coin that are worthless excep
 one and only 'Ancient Gold Coin'. Players will take turns to play. Each turn consists of only 1 move.
 The available moves that a player can do are:
 1) Slide any coin any number of spaces to the *left* on a condition that:
-     - A coin cannot jumped over another coin
+     - A coin cannot jump over another coin
      - It does not share the same square with another coin
 2) Remove a coin when it is placed/moved to the most-left grid / in position 1
 
