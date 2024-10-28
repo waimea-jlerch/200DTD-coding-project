@@ -5,30 +5,16 @@
  *
  * by Jess Lerch
  *
- * This Game is a recreation of a game called 'Old Gold' that was introduced to me via physical paper board game.
- *
- * Little introduction story to 'Ancient Gold Coin: Your Shot to Wealthiness':
- *
- * Imagine a scenario where you just lost your job and are really in need of a lot of money, an amount that would
- * turn your life around forever without the need to worry about finance again. You recently found a very old looking map
- * in your grandparent's basement in a small wooden chest that seemed to be left unbothered for centuries.
- * As this is your chance to change your life around, you think it is worth the risk to follow that map and find
- * what it is hiding... After a long struggle, in a cave, you manage to find what seemed to be the treasure that the map is
- * leading you to, an 'Ancient Gold Coin'. However, there's always a catch.
- * A silhouette slowly appear which seem to be your opponent! Watch out, both of you now have to compete and prove yourself
- * to the cave that you are worthy to receive the coin! This is your last shot to wealthiness, and you must win this!
- *
- * The way of proving yourself to the cave and how to win (rules):
- * This game is a two player game played on a one-dimensional grid of squares. A certain number coins are randomly
- * placed onto the grid. Most of the coins are normal coin that are worthless except for one of the coins that is the
- * one and only 'Ancient Gold Coin'. Players will take turns to play. Each turn consists of only 1 move.
- * The available moves that a player can do are:
- * 1) Slide any coin any number of spaces to the *left* on a condition that:
- *      - Other coins are not jumped
- *      - It does not share the same square with another coin
- * 2) Remove a coin when it is placed/moved to the most-left grid / in position 1
- *
- * To win, you have to be the first to successfully removed the 'Ancient Gold Coin'!
+ * The project involves the programming of a two-player game.
+ * It is a game about competing to obtain the 'Ancient gold coin' before your opponent
+ * to gain your shortcut to long-lasting wealthiness!
+ * This game is a two player game played on a one-dimensional grid of squares.
+ * A certain number coins are randomly placed onto the grid.
+ * Most of the coins are normal coin that are worthless except
+ * for one of the coins that is the one and only 'Ancient Gold Coin'.
+ * Players will take turns move the coins from right to left.
+ * When a coin is at the most left grid, it can be removed of the grid.
+ * First player to remove the 'Ancient Gold Coin' wins!
  * ------------------------------------------------------------------------
  */
 
@@ -37,19 +23,20 @@
  * Program entry point
  */
 val silverCoin = "●".grey()
-val goldCoin = "●".yellow()
+val goldCoin = "●".col("#ebce38")
 const val space = " "
-//var turn = 0
 
 fun main() {
     println("---------------------------------------------------------------------------------------------------------------------------------------")
     println()
     // Welcome message
-    println("Welcome to 'Ancient Gold Coin' the Game!".bold())
+    println( "╭──────────────────────────────────────────────╮\n" +
+             "│ " + goldCoin + " Welcome to 'Ancient Gold Coin' the Game! ".bold() + silverCoin + " │\n" +
+             "╰──────────────────────────────────────────────╯" )
 
     val players = mutableListOf<String>()
     val grid = mutableListOf<String>()
-    val currentTurn: Int = 0
+    val currentTurn = 0
 
     while (true) {
     // Get action choice from user
@@ -73,18 +60,16 @@ fun main() {
 
 }
 
-/**
- * Get User Action from Menu
- * Displays a list of options and then gets
- * the user's choice. Returns just the first
- * character in uppercase
- */
+// Get user action from menu by:
+// Displaying a list of options
+// Get the user's choice.
+// Returns just the first character in UPPERCASE
 fun getUserAction(): Char {
     while(true) {
         println()
 
         // Show options
-        println("MENU")
+        println("✦ MENU ✦".bold())
         println(" [P] Play!")
         println(" [S] Start without intro")
         println(" [R] View Rules")
@@ -102,6 +87,7 @@ fun getUserAction(): Char {
     }
 }
 
+// Game starting Introduction (main character is randomized)
 fun startIntro(players: MutableList<String>) {
     println()
     println("---------------------------------------------------------------------------------------------------------------------------------------")
@@ -120,81 +106,96 @@ fun startIntro(players: MutableList<String>) {
             "This is your last shot to wealthiness, and you must win this!")
 
     println()
-    print("Press Enter to continue...")
+    print("Press " + "Enter".bold().col("#e3e3e3") + " to continue...")
     readln()
 }
 
+// Get players name from user's input
 fun getNames(players: MutableList<String>) {
 
     println()
     // adding player 1's name
     println("Enter players name")
-    print("Player 1 : ")
-    val player1 : String = readln()
+    print("✦".col("#4fb3ff") + " Player 1 : ")
+    val player1 : String = readln().trim()
     // check for empty input
     if (player1.isNotBlank() ) {
         players.add(player1)
     }
     else{
-        players.add("Mr.A")
+        players.add("Mr.Kneecap") // if null use default name
     }
 
-    //getting player 2's name
-    print("Player 2 : ")
-    val player2 : String = readln()
-    // check for empty input
-    if (player2.isNotBlank() ) {
-        players.add(player2)
-    }
-    else{
-        players.add("Mr.B")
+    // put in loop for invalid checking
+    while (true) {
+        //getting player 2's name
+        print("✦".col("#cf7336") +" Player 2 : ")
+        val player2 : String = readln().trim()
+
+        // check for empty input and duplicates
+        if (player2.isNotBlank()) {
+            if (player2 != player1) {
+                players.add(player2)
+                break // Exit the loop if the name is valid
+            } else {
+                println("This name already exists! Please enter a different player name.".red())
+                println()
+
+            }
+        } else {
+            players.add("Mr.Longlegs") // if null use default name
+            break
+        }
     }
 
+    // display name
     println()
-    println("Hi Player 1, your name is ${players[0]}")
+    if (players[0] == "Mr.Kneecap" || players[1] == "Mr.Longlegs")
+        println("Default names are used for players with blank names.".grey())
+    println("Hi Player 1, your name is " + players[0].bold().col("#4fb3ff"))
     println("             AND")
-    println("Hi Player 2, your name is ${players[1]}")
+    println("Hi Player 2, your name is " + players[1].bold().col("#cf7336"))
 }
 
-/** View Rules! */
+// View Rules!
 fun rules() {
     println()
     println("---------------------------------------------------------------------------------------------------------------------------------------")
     println()
 
-    println("The way of proving yourself to the cave and how to win (rules):\n" +
+    println("The way of proving yourself to the cave and " + "how to win".underline().italic() + " (rules):\n" +
             "This game is a two player game played on a one-dimensional grid of squares. A certain number coins are randomly\n" +
             "placed onto the grid. Most of the coins are normal coin that are worthless except for one of the coins that is the\n" +
             "one and only 'Ancient Gold Coin'. Players will take turns to play. Each turn consists of only 1 move.\n" +
             "The available moves that a player can do are:\n" +
             "1) Slide any coin any number of spaces to the *left* on a condition that:\n" +
-            "      - Other coins are not jumped\n" +
+            "      - A coin cannot jumped over another coin\n" +
             "      - It does not share the same square with another coin\n" +
             "2) Remove a coin when it is placed/moved to the most-left grid / in position 1\n" +
             "\n" +
-            "To win, you have to be the first to successfully removed the 'Ancient Gold Coin'!")
+            "To win, you have to be the first to successfully " + "removed".underline().italic() + " the 'Ancient Gold Coin' from the grid!")
 
     println()
-    print("Press Enter to return...")
+    print("Press " + "Enter".bold().col("#e3e3e3") + " to return...")
     readln()
     println()
     println("---------------------------------------------------------------------------------------------------------------------------------------")
-    println()
-
 }
 
-/** grid and coin selector  */
+// grid and coin selector
 fun setupGame(grid: MutableList<String>) {
     println()
     println("---------------------------------------------------------------------------------------------------------------------------------------")
 
-    var gridSize: Int = 0
-    var coinsNumber: Int = 0
+    var gridSize = 0
+    var coinsNumber = 0
 
     while(true) {
         println()
-        println("Select your cave!".bold())
-        println("Note: Recommended Cave is 'THE Cave'!")
+        println("✦ SELECT YOUR CAVE! ✦".bold())
+        println("┌───────────────────────────────────────┐\n".grey() +
+                "│ Note: Recommended Cave is 'THE Cave'! │\n".grey() +
+                "└───────────────────────────────────────┘"  .grey())
         println()
 
         // option 1
@@ -239,14 +240,14 @@ fun setupGame(grid: MutableList<String>) {
             "4" -> {
                 println()
                 println()
-                println("✦ CUSTOM SETTINGS ✦".bold().underline()) // heading
-                println("┌────────────────────────────────────────────────────────────────────────────────────┐\n" +
-                        "│   Note:                                                                            │\n" +
-                        "│  - Max cave size is 60                                                             │\n" +
-                        "│  - Min cave size is 5                                                              │\n" +
-                        "│  - Coins number cannot exceed and must be at least 2 less than cave size           │\n" +
-                        "│  - If any invalid input is detected you are required to enter everything in again. │\n" +
-                        "└────────────────────────────────────────────────────────────────────────────────────┘")
+                println("✦ CUSTOM SETTINGS ✦".bold()) // heading
+                println("┌─────────────────────────────────────────────────────────────────────────────────────┐\n" +
+                        "│   Note:                                                                             │\n" +
+                        "│  - Max cave size is 60                                                              │\n" +
+                        "│  - Min cave size is 5                                                               │\n" +
+                        "│  - Coins number cannot exceed and must be at least 2 less than cave size            │\n" +
+                        "│  - If any invalid input is detected you are required to enter everything in again.  │\n" +
+                        "└─────────────────────────────────────────────────────────────────────────────────────┘")
 
                 while (true) {
                     // Get input for grid size
@@ -345,6 +346,7 @@ fun setupGame(grid: MutableList<String>) {
     println("---------------------------------------------------------------------------------------------------------------------------------------")
 }
 
+// Game grid formatting
 fun showCave(grid: MutableList<String>) {
     //index box labelling
     for (i in grid.indices) {
@@ -377,6 +379,7 @@ fun showCave(grid: MutableList<String>) {
 
 }
 
+// Moving coin and invalid move checking
 fun moveCoin (grid: MutableList<String> ,players: MutableList<String>, currentTurn: Int): Int{
     // Select coin
     println()
@@ -405,7 +408,7 @@ fun moveCoin (grid: MutableList<String> ,players: MutableList<String>, currentTu
             when (removeOption) {
                 "Y" -> {
                     if (grid[0] == goldCoin) {
-                        endingScene(grid, players, currentTurn)
+                        endingScene(players, currentTurn)
                         // return same player turn as they have won
                         return currentTurn
                     }
@@ -473,6 +476,7 @@ fun moveCoin (grid: MutableList<String> ,players: MutableList<String>, currentTu
 
 }
 
+// Get user move and swapped player
 fun playGame(grid: MutableList<String>, players: MutableList<String>, currentTurn: Int) {
     println()
     showCave(grid)
@@ -481,8 +485,15 @@ fun playGame(grid: MutableList<String>, players: MutableList<String>, currentTur
 
     while (true) {
         println()
-        // Use currentPlayerTurn for display
-        println("It's ${players[currentPlayerTurn]}'s turn!")
+        if (currentPlayerTurn == 0) {
+            println("It's " + "${players[currentPlayerTurn]}'s".col("#4fb3ff").bold() + " turn!")
+        }
+        else if (currentPlayerTurn ==1){
+            println("It's " + "${players[currentPlayerTurn]}'s".col("#cf7336").bold() + " turn!")
+        }
+//        // Use currentPlayerTurn for display
+//        println("It's" + "${players[currentPlayerTurn]}'s" + "turn!")
+
         // get updated turn
         currentPlayerTurn = moveCoin(grid, players, currentPlayerTurn)
 
@@ -493,25 +504,26 @@ fun playGame(grid: MutableList<String>, players: MutableList<String>, currentTur
 
 }
 
-fun endingScene(grid: MutableList<String>, players: MutableList<String>, currentTurn: Int) {
+// Ending story and show winner
+fun endingScene(players: MutableList<String>, currentTurn: Int) {
     println("\n".repeat(5))
-    println("⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀\n".yellow() +
-            "⢠⣤⣤⣤⣼⡇⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣄⣤⣤⣠\n".yellow() +
-            "⢸⠀⡶⠶⠾⡇⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡷⠶⠶⡆⡼\n".yellow() +
-            "⠈⡇⢷⠀⠀⣇  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠇⠀⢸⢁⡗\n".yellow() +
-            "⠀ ⢹⡘⡆⠀⢹⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡸⠀⢀⡏⡼⠀\n".yellow() +
-            "⠀ ⠀⢳⡙⣆⠈⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠇⢀⠞⡼⠁⠀\n".yellow() +
-            "⠀⠀ ⠀⠙⣌⠳⣼⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣞⡴⣫⠞⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀ ⠀⠈⠓⢮⣻⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⣩⠞⠉⠀⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀⠀⠀⠀ ⠀⠉⠛⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠋⠁⠀⠀⠀⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠈⠳⢤⣀⠀⠀⠀⠀⢀⣠⠖⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠈⠉⡇⢸⡏⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⡇⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢠⠖⠒⠓⠚⠓⠒⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀⠀⠀⠀⠀⣀⣠⣞⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣙⣆⣀⠀⠀⠀⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ⡇⠀⠀⠀⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ⠀⡇⠀⠀⠀⠀⠀⠀\n".yellow() +
-            "⠀⠀⠀⠀⠀⠀⠀⠓⠲⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠖⠃⠀⠀⠀⠀⠀⠀".yellow())
+    println("⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀\n".col("#FFD700") +
+            "⢠⣤⣤⣤⣼⡇⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣄⣤⣤⣠\n".col("#FFD700") +
+            "⢸⠀⡶⠶⠾⡇⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡷⠶⠶⡆⡼\n".col("#FFD700") +
+            "⠈⡇⢷⠀⠀⣇  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠇⠀⢸⢁⡗\n".col("#FFD700") +
+            "⠀ ⢹⡘⡆⠀⢹⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡸⠀⢀⡏⡼⠀\n".col("#FFD700") +
+            "⠀ ⠀⢳⡙⣆⠈⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠇⢀⠞⡼⠁⠀\n".col("#FFD700") +
+            "⠀⠀ ⠀⠙⣌⠳⣼⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣞⡴⣫⠞⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀ ⠀⠈⠓⢮⣻⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⣩⠞⠉⠀⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀⠀⠀⠀ ⠀⠉⠛⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠋⠁⠀⠀⠀⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠈⠳⢤⣀⠀⠀⠀⠀⢀⣠⠖⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠈⠉⡇⢸⡏⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⡇⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢠⠖⠒⠓⠚⠓⠒⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀⠀⠀⠀⠀⣀⣠⣞⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣙⣆⣀⠀⠀⠀⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ⡇⠀⠀⠀⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ⠀⡇⠀⠀⠀⠀⠀⠀\n".col("#FFD700") +
+            "⠀⠀⠀⠀⠀⠀⠀⠓⠲⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠖⠃⠀⠀⠀⠀⠀⠀".col("#FFD700"))
     println("---------------------------------------------------------------------------------------------------------------------------------------")
     println()
 
@@ -532,33 +544,15 @@ fun endingScene(grid: MutableList<String>, players: MutableList<String>, current
             "THE END\n".italic())
 
     println()
-    print("Press ENTER to return to main menu...")
+    print("Press " + "Enter".bold().col("#e3e3e3") + " to return to main menu...")
     readln()
 
     println("\n".repeat(50))
-    println("---------------------------------------------------------------------------------------------------------------------------------------")
-    println("\n".repeat(5))
     main()
 }
 
 
 
-
-/** OLD VERSION OF COINS RANDOM GENERATOR THAT DOESN'T HAVE A WAY TO DETECT RANDOMIZING INTO SAME POSITION -----------------
-
-    // Build the grid
-    for (i in 0 until gridSize) {
-        grid.add(space)
-    }
-
-    // Silver coins
-    for (i in 0 until coinsNumber - 1) {
-        val position = (1 until gridSize).random()
-        grid[position] = silverCoin
-    }
-
-    // Gold coin
-    val position = (1 until gridSize).random()
-    grid[position] = goldCoin
-
+/**
+ * Program end point
  */
