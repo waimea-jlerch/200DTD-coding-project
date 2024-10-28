@@ -38,7 +38,8 @@
  */
 val silverCoin = "●".grey()
 val goldCoin = "●".yellow()
-val space = " "
+const val space = " "
+//var turn = 0
 
 fun main() {
     println("---------------------------------------------------------------------------------------------------------------------------------------")
@@ -48,8 +49,7 @@ fun main() {
 
     val players = mutableListOf<String>()
     val grid = mutableListOf<String>()
-//    val turn = arrayOf(0,1)
-    var turn = 0
+    val currentTurn: Int = 0
 
     while (true) {
     // Get action choice from user
@@ -59,12 +59,12 @@ fun main() {
                 getNames(players)
                 startIntro(players)          // start with introduction
                 setupGame(grid)
-                playGame(grid, players, turn)
+                playGame(grid, players, currentTurn)
             }
             'S' -> {
                 getNames(players)
                 setupGame(grid)              // start without introduction
-                playGame(grid, players, turn)
+                playGame(grid, players, currentTurn)
             }
             'R' -> rules()                   // view rules
             'Q' -> System.exit(0)     // Exit
@@ -107,12 +107,15 @@ fun startIntro(players: MutableList<String>) {
     println("---------------------------------------------------------------------------------------------------------------------------------------")
     println()
 
-    println("Imagine a scenario where ${players[0]} just lost their job and they are really in need of a lot of money, an amount that would\n" +
-            "turn ${players[0]}'s life around forever without the need to worry about finance again. ${players[0]} recently found a very old looking map\n" +
+    val mainP = players.indices.random()
+    val sideP = if (mainP == 0) 1 else 0
+
+    println("Imagine a scenario where ${players[mainP]} just lost their job and they are really in need of a lot of money, an amount that would\n" +
+            "turn ${players[mainP]}'s life around forever without the need to worry about finance again. ${players[mainP]} recently found a very old looking map\n" +
             "in their grandparent's basement in a small wooden chest that seemed to be left unbothered for centuries.\n" +
-            "As this is ${players[0]}'s chance to change your life around, they think it is worth the risk to follow that map and find\n" +
-            "what it is hiding... After a long struggle, in a cave, ${players[0]} manage to find what seemed to be the treasure that the map is\n" +
-            "leading you to, the 'Ancient Gold Coin'. However, there's always a catch. A silhouette slowly appear which seem to be ${players[1]}!\n" +
+            "As this is ${players[mainP]}'s chance to change your life around, they think it is worth the risk to follow that map and find\n" +
+            "what it is hiding... After a long struggle, in a cave, ${players[mainP]} manage to find what seemed to be the treasure that the map is\n" +
+            "leading you to, the 'Ancient Gold Coin'. However, there's always a catch. A silhouette slowly appear which seem to be ${players[sideP]}!\n" +
             "Watch out, both of you now have to compete and prove yourself to the cave that you are worthy to receive the coin!\n" +
             "This is your last shot to wealthiness, and you must win this!")
 
@@ -236,7 +239,14 @@ fun setupGame(grid: MutableList<String>) {
             "4" -> {
                 println()
                 println()
-                println("✦ CUSTOM SETTINGS ✦".bold()) // heading
+                println("✦ CUSTOM SETTINGS ✦".bold().underline()) // heading
+                println("┌────────────────────────────────────────────────────────────────────────────────────┐\n" +
+                        "│   Note:                                                                            │\n" +
+                        "│  - Max cave size is 60                                                             │\n" +
+                        "│  - Min cave size is 5                                                              │\n" +
+                        "│  - Coins number cannot exceed and must be at least 2 less than cave size           │\n" +
+                        "│  - If any invalid input is detected you are required to enter everything in again. │\n" +
+                        "└────────────────────────────────────────────────────────────────────────────────────┘")
 
                 while (true) {
                     // Get input for grid size
@@ -307,6 +317,11 @@ fun setupGame(grid: MutableList<String>) {
         }
     }
 
+    // Build the grid
+    for (i in 0 until gridSize) {
+        grid.add(space)
+    }
+
     // Create a set to track occupied positions
     val occupiedPositions = mutableSetOf<Int>()
 
@@ -362,21 +377,21 @@ fun showCave(grid: MutableList<String>) {
 
 }
 
-fun moveCoin (grid: MutableList<String> ,players: MutableList<String>, currentTurn: Int){
+fun moveCoin (grid: MutableList<String> ,players: MutableList<String>, currentTurn: Int): Int{
     // Select coin
     println()
     print("Select the square number of the coin that you want to move: ")
     // Check for invalid inputs
     val selectedCoin = readln().toIntOrNull() ?: run {
         println("Invalid input! Please enter a valid integer.".red())
-        return // Exit the function on invalid input
+        return currentTurn // Exit function as invalid input is detected
     }
 
     // Check for valid indices & whether a coin is already there for 'selectedCoin'
     if (selectedCoin !in grid.indices || grid[selectedCoin] != goldCoin
         && grid[selectedCoin] != silverCoin) {
-        println()
         println("Invalid selection! Please select a grid with an existing coin!" .red())
+        return currentTurn
     }
 
     println()
@@ -391,22 +406,24 @@ fun moveCoin (grid: MutableList<String> ,players: MutableList<String>, currentTu
                 "Y" -> {
                     if (grid[0] == goldCoin) {
                         endingScene(grid, players, currentTurn)
-                        return
+                        // return same player turn as they have won
+                        return currentTurn
                     }
                     else {
                         grid[0] = " "
-                        return
+                        // update turn
+                        return if (currentTurn == 0) 1 else 0
                     }
                 }
 
                 "N" -> {
                     moveCoin(grid, players, currentTurn)
-                    return
+                    return currentTurn
                 }
 
                 else -> {
                     println("Invalid! Please enter [Y]es or [N]o.".red())
-                    return
+                    return currentTurn
                 }
             }
         }
@@ -417,35 +434,33 @@ fun moveCoin (grid: MutableList<String> ,players: MutableList<String>, currentTu
     print("Select the slot where you want to move the coin to: ")
     // Check for invalid inputs
     val moveTo = readln().toIntOrNull() ?: run {
-        println()
         println("Invalid input! Please enter a valid integer.".red())
-        return
+        return currentTurn
     }
 
     // Check for valid indices of 'moveTo'
     if ( moveTo !in grid.indices) {
-        println()
         println("Invalid index! Cannot move the coin there!" .red())
+        return currentTurn
     }
 
     // Check for valid move of right to left ←←←
     if (moveTo > selectedCoin){
-        println()
         println("Invalid move! Coin can only be moved from right to left (←←←).".red())
+        return currentTurn
     }
 
     // Check if destination is empty (no coin)
     if (grid[moveTo] == silverCoin || grid[moveTo] == goldCoin) {
-        println()
         println("Invalid move! You cannot move a coin to a position with an existing coin.".red())
+        return currentTurn
     }
 
     // Check for jumping over coins
     for (i in (moveTo + 1) until selectedCoin) {
         if (grid[i] == goldCoin || grid[i] == silverCoin) {
-            println()
             println("Invalid move! You cannot jump over a coin.".red())
-            return
+            return currentTurn
         }
     }
 
@@ -453,31 +468,23 @@ fun moveCoin (grid: MutableList<String> ,players: MutableList<String>, currentTu
     val temp = grid[selectedCoin]
     grid[selectedCoin] = grid[moveTo]
     grid[moveTo] = temp
+    // Update turn
+    return if (currentTurn == 0) 1 else 0
 
 }
 
-fun playGame(grid: MutableList<String>, players: MutableList<String>, turn: Int) {
+fun playGame(grid: MutableList<String>, players: MutableList<String>, currentTurn: Int) {
     println()
     showCave(grid)
-    println()
 
-    var currentTurn = turn
+    var currentPlayerTurn = currentTurn
 
     while (true) {
         println()
-        if (currentTurn == 0) {
-            println("It's ${players[0]}'s turn!")
-            moveCoin(grid, players, currentTurn)
-            //next player
-            currentTurn = 1
-        }
-        else if (currentTurn == 1){
-            println()
-            println("It's ${players[1]}'s turn!")
-            moveCoin(grid, players, currentTurn)
-            //change player's turn
-            currentTurn = 0
-        }
+        // Use currentPlayerTurn for display
+        println("It's ${players[currentPlayerTurn]}'s turn!")
+        // get updated turn
+        currentPlayerTurn = moveCoin(grid, players, currentPlayerTurn)
 
         //show updated cave
         println()
@@ -487,13 +494,42 @@ fun playGame(grid: MutableList<String>, players: MutableList<String>, turn: Int)
 }
 
 fun endingScene(grid: MutableList<String>, players: MutableList<String>, currentTurn: Int) {
+    println("\n".repeat(5))
+    println("⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀\n".yellow() +
+            "⢠⣤⣤⣤⣼⡇⠀⠀⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣄⣤⣤⣠\n".yellow() +
+            "⢸⠀⡶⠶⠾⡇⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡷⠶⠶⡆⡼\n".yellow() +
+            "⠈⡇⢷⠀⠀⣇  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠇⠀⢸⢁⡗\n".yellow() +
+            "⠀ ⢹⡘⡆⠀⢹⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡸⠀⢀⡏⡼⠀\n".yellow() +
+            "⠀ ⠀⢳⡙⣆⠈⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠇⢀⠞⡼⠁⠀\n".yellow() +
+            "⠀⠀ ⠀⠙⣌⠳⣼⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣞⡴⣫⠞⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀ ⠀⠈⠓⢮⣻⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⣩⠞⠉⠀⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀⠀⠀⠀ ⠀⠉⠛⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠋⠁⠀⠀⠀⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠈⠳⢤⣀⠀⠀⠀⠀⢀⣠⠖⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠈⠉⡇⢸⡏⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⡇⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢠⠖⠒⠓⠚⠓⠒⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀⠀⠀⠀⠀⣀⣠⣞⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣙⣆⣀⠀⠀⠀⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ⡇⠀⠀⠀⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀   ⠀⡇⠀⠀⠀⠀⠀⠀\n".yellow() +
+            "⠀⠀⠀⠀⠀⠀⠀⠓⠲⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠖⠃⠀⠀⠀⠀⠀⠀".yellow())
+    println("---------------------------------------------------------------------------------------------------------------------------------------")
     println()
-    if (currentTurn == 0){
-        println("${players[0]} WON!")
-    }
-    else {
-        println("${players[1]} WON!")
-    }
+
+    val loser = if (currentTurn == 0) 1 else 0
+
+    print("Congratulations ${players[currentTurn]}!".bold().italic())
+    print(" ${players[currentTurn]} took the Ancient Gold Coin back home with grace before selling it to " + "Melon Ausk\n".underline() +
+            "the wealthiest man on Earth. Melon Ausk just discover his new found love of collecting rare antiques and this 'Ancient Gold Coin'\n" +
+            "is so precious and mysterious that Melon Ausk is willing to pay an absurd amount of money to grant the coin as his own. \n" +
+            "This amount of money is enough for ${players[currentTurn]} to live happily without the need to work again, as well as enough\n" +
+            "to pass this comfortable lifestyle to the next few generations of theirs.\n" +
+            "${players[currentTurn]} have won the shortcut to wealthiness!\n".bold().italic() +
+            "\n" +
+            "${players[currentTurn]} walks home while humming a happy song, but only if they know that ${players[loser]} is furious by their defeat.\n" +
+            "${players[loser]} lurks in the dark watching every step of ${players[currentTurn]}. Fist clenched, ${players[loser]} wonder and hope\n" +
+            "for the day that they will get their REVENGE!\n" +
+            "\n" +
+            "THE END\n".italic())
 
     println()
     print("Press ENTER to return to main menu...")
@@ -508,7 +544,7 @@ fun endingScene(grid: MutableList<String>, players: MutableList<String>, current
 
 
 
-/** OLD VERSION OF COINS RANDOM GENERATOR THAT DOESN'T HAVE ECC -----------------
+/** OLD VERSION OF COINS RANDOM GENERATOR THAT DOESN'T HAVE A WAY TO DETECT RANDOMIZING INTO SAME POSITION -----------------
 
     // Build the grid
     for (i in 0 until gridSize) {
