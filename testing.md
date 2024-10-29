@@ -36,13 +36,7 @@ To win, you have to be the first to successfully removed the 'Ancient Gold Coin'
 
 The following game features / functionality and player actions will need to be tested:
 
-- Main Menu: be able to withstand invalid input + allows player to select each option without errors
-     - Action to test -> 
-       - Try inputting invalid inputs 
-       - Try inputting nothing at all
-       - Try inputting each option to check if it leads to the correct flow of programme. 
-       
-
+- Main Menu
 - FUNCTIONALITY / FEATURE / ACTION TO TEST
 - FUNCTIONALITY / FEATURE / ACTION TO TEST
 - FUNCTIONALITY / FEATURE / ACTION TO TEST
@@ -51,17 +45,26 @@ The following game features / functionality and player actions will need to be t
 The following tests will be run against the completed game. The tests should result in the expected outcomes shown.
 
 
-### TEST NAME HERE
+### Main Menu
 
-TEST DESCRIPTION HERE
+Main Menu should be able to withstand any invalid inputs, 
+and allows player to select each option that will lead to the correct flow of programme without errors.
 
 #### Test Data / Actions to Use
 
-TEST DATA TO USE DETAILED HERE
+1) Try inputting invalid inputs
+2) Try inputting nothing at all
+3) Try inputting each option to check if it leads to the correct flow of programme.
 
 #### Expected Outcome
 
-EXPECTED OUTCOME DETAILED HERE
+1) display error message and display main menu again
+2) display error message and display main menu again
+3) observed what function the main menu jumps to after an option is selected.
+      - [P] Play, should jump to 'startIntro()' function
+      - [S] Skip, should jump to 'getNames()' function
+      - [R] Rules, should jump to 'rules()' function
+      - [Q] Quit, should exit the programme
 
 
 ### TEST NAME HERE

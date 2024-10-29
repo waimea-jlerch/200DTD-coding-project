@@ -42,19 +42,20 @@ fun main() {
     // Get action choice from user
     val option = getUserAction()
         when (option) {
-            'P' -> {
-                getNames(players)
-                startIntro(players)          // start with introduction
-                setupGame(grid)
-                playGame(grid, players, currentTurn)
+            'P'  -> {
+                 getNames(players)
+                 startIntro(players)          // start with introduction
+                 setupGame(grid)
+                 playGame(grid, players, currentTurn)
             }
-            'S' -> {
-                getNames(players)
-                setupGame(grid)              // start without introduction
-                playGame(grid, players, currentTurn)
+            'S'  -> {
+                 getNames(players)
+                 setupGame(grid)              // start without introduction
+                 playGame(grid, players, currentTurn)
             }
-            'R' -> rules()                   // view rules
-            'Q' -> System.exit(0)     // Exit
+            'R'  -> rules()                   // view rules
+            'Q'  -> System.exit(0)     // Exit
+            else -> println("Invalid option! Please select an option from the main menu!".red())
         }
     }
 
@@ -83,6 +84,9 @@ fun getUserAction(): Char {
         if (option.isNotEmpty()) {
             // Return just the first char
             return option.uppercase().first()
+        }
+        else if (option.isEmpty()){
+            println("Invalid option! Please select an option from the main menu!".red())
         }
     }
 }
