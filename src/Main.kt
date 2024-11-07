@@ -118,27 +118,39 @@ fun startIntro(players: MutableList<String>) {
 fun getNames(players: MutableList<String>) {
 
     println()
-    // adding player 1's name
     println("Enter players name")
-    print("✦".col("#4fb3ff") + " Player 1 : ")
-    val player1 : String = readln().trim()
-    // check for empty input
-    if (player1.isNotBlank() ) {
-        players.add(player1)
-    }
-    else{
-        players.add("Mr.Kneecap") // if null use default name
+
+    while (true) {
+        // getting and adding player 1's name
+        print("✦".col("#4fb3ff") + " Player 1 : ")
+        val player1: String = readln().trim()
+        // check for input that is too long
+        if (player1.length > 20) {
+            println("This name is too long! Please try entering a shorter name.".red())
+            println()
+            // check or empty input
+        } else if (player1.isNotBlank()) {
+            players.add(player1)
+            break
+        } else {
+            players.add("Mr.Kneecap") // if null use default name
+            break
+        }
     }
 
     // put in loop for invalid checking
     while (true) {
-        //getting player 2's name
+        // getting player 2's name
         print("✦".col("#cf7336") +" Player 2 : ")
         val player2 : String = readln().trim()
 
-        // check for empty input and duplicates
+        // check for empty & too long input and duplicates
         if (player2.isNotBlank()) {
-            if (player2 != player1) {
+            if (player2.length > 20) {
+                println("This name is too long! Please try entering a shorter name.".red())
+                println()
+            }
+            else if (player2 != players[0]) {
                 players.add(player2)
                 break // Exit the loop if the name is valid
             } else {

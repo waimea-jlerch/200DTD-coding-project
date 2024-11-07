@@ -37,9 +37,14 @@ To win, you have to be the first to successfully removed the 'Ancient Gold Coin'
 The following game features / functionality and player actions will need to be tested:
 
 - Main Menu
-- FUNCTIONALITY / FEATURE / ACTION TO TEST
-- FUNCTIONALITY / FEATURE / ACTION TO TEST
-- FUNCTIONALITY / FEATURE / ACTION TO TEST
+- Getting player names invalid detections
+- Select Cave invalid detection
+- Custom Cave setting invalid detection
+- Check cave display (if it is correct as selected cave)
+- Invalid moves and changing turns (if a player get invalid move they still have chance to play again)
+- Removing coin confirmation message and its corresponding response
+- Check Winner and ending story
+- Check if game loop works properly once a game has finished
 - FUNCTIONALITY / FEATURE / ACTION TO TEST
 
 The following tests will be run against the completed game. The tests should result in the expected outcomes shown.
