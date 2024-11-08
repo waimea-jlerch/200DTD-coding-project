@@ -1,4 +1,4 @@
-# Ancient Gold Coin: Your Shot to Wealthiness
+# Ancient Gold Coin: Your Shot to Wealth
 
 ### Level 2 Programming Project by Jess Lerch
 
@@ -9,7 +9,7 @@ This project is assessed against [AS91896](https://www.nzqa.govt.nz/nqfdocs/ncea
 The project involves the programming of a two-player game that is based off of 
 a game called 'Old Gold' that was introduced to me via physical paper board game.
 
-- Little introduction story to 'Ancient Gold Coin: Your Shot to Wealthiness':
+- Little introduction story to 'Ancient Gold Coin: Your Shot to Wealth':
 
 Imagine a scenario where you just lost your job and are really in need of a lot of money, an amount that would
 turn your life around forever without the need to worry about finance again. You recently found a very old looking map
@@ -17,8 +17,8 @@ in your grandparent's basement in a small wooden chest that seemed to be left un
 As this is your chance to change your life around, you think it is worth the risk to follow that map and find
 what it is hiding... After a long struggle, in a cave, you manage to find what seemed to be the treasure that the map is
 leading you to, an 'Ancient Gold Coin'. However, there's always a catch.
-A silhouette slowly appear which seem to be your opponent! Watch out, both of you now have to compete and prove yourself
-to the cave that you are worthy to receive the coin! This is your last shot to wealthiness, and you must win this!
+A silhouette slowly appears which seems to be your opponent! Watch out, both of you now have to compete and prove yourself
+to the cave that you are worthy to receive the coin! This is your last shot to wealth, and you must win this!
 
 - The way of proving yourself to the cave and how to win (rules):
 

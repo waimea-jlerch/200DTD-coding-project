@@ -3,7 +3,7 @@
 ## Game Description
 
 The project involves the programming of a two-player game.
-It is a game about competing to obtain the 'Ancient gold coin' before your opponent
+'Ancient Gold Coin: Your Shot to Wealth' is a game about competing to obtain the 'Ancient gold coin' before your opponent
 to gain your shortcut to long-lasting wealthiness!
 This game is played on a one-dimensional grid of squares.
 A certain number coins are randomly placed onto the grid.
@@ -269,7 +269,7 @@ EXPECTED OUTCOME DETAILED HERE
 
 ## Evidence / Results of Testing
 
-note: Most of the testing evidence videos have 'chapters' (in microsoft Stream) with descriptions of a certain part of a clip for a better marking experience.
+Note: Most of the testing evidence videos have 'chapters' (in microsoft Stream) with descriptions of the parts in a clip for a better marking experience.
 
 ### Main Menu
 
@@ -371,12 +371,14 @@ Testing clip:
 
 ### Whole Game Testing
 
-This final video shows the whole game testing done by 2 tester. They will try to play the game and see if the program is solid
+This final video shows the whole game testing done by me and a tester. We will try to play the game and see if the program is solid
 and can prevent against invalids that could happen during playing.
 
-![](images/placeholder.jpg)
+Testing clip (This clip is quite long so speeding up the clip is recommended):
 
-Note: The testers above are Mimi, my host dad, and my host mom.
+[Click here](https://mywaimeaschool-my.sharepoint.com/:v:/g/personal/jlerch_waimea_school_nz/EQg0AuZ22hlPn_h2NbPieVkBfIesoLsrmF39sfr-PALJYw)
+
+Note: The tester above is my schoolmate, Song Lee.
 
 
 <!--

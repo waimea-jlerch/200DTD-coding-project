@@ -1,6 +1,6 @@
 /**
  * ------------------------------------------------------------------------
- * Ancient Gold Coin: Your Shot to Wealthiness
+ * Ancient Gold Coin: Your Shot to Wealth
  * Level 2 programming project
  *
  * by Jess Lerch
@@ -103,11 +103,11 @@ fun startIntro(players: MutableList<String>) {
     println("Imagine a scenario where ${players[mainP]} just lost their job and they are really in need of a lot of money, an amount that would\n" +
             "turn ${players[mainP]}'s life around forever without the need to worry about finance again. ${players[mainP]} recently found a very old looking map\n" +
             "in their grandparent's basement in a small wooden chest that seemed to be left unbothered for centuries.\n" +
-            "As this is ${players[mainP]}'s chance to change your life around, they think it is worth the risk to follow that map and find\n" +
+            "As this is ${players[mainP]}'s chance to change their life around, they think it is worth the risk to follow that map and find\n" +
             "what it is hiding... After a long struggle, in a cave, ${players[mainP]} manage to find what seemed to be the treasure that the map is\n" +
-            "leading you to, the 'Ancient Gold Coin'. However, there's always a catch. A silhouette slowly appear which seem to be ${players[sideP]}!\n" +
+            "leading them to, the 'Ancient Gold Coin'. However, there's always a catch. A silhouette slowly appears which seems to be ${players[sideP]}!\n" +
             "Watch out, both of you now have to compete and prove yourself to the cave that you are worthy to receive the coin!\n" +
-            "This is your last shot to wealthiness, and you must win this!")
+            "This is your last shot at wealth, and you must win this!")
 
     println()
     print("Press " + "Enter".bold().col("#e3e3e3") + " to continue...")
@@ -187,7 +187,7 @@ fun rules() {
             "1) Slide any coin any number of spaces to the *left* on a condition that:\n" +
             "      - A coin cannot jump over another coin\n" +
             "      - It does not share the same square with another coin\n" +
-            "2) Remove a coin when it is placed/moved to the most-left grid / in position 1\n" +
+            "2) Remove a coin when it is placed/moved to the most-left grid / in position '0'\n" +
             "\n" +
             "To win, you have to be the first to successfully " + "removed".underline().italic() + " the 'Ancient Gold Coin' from the grid!")
 
@@ -563,10 +563,10 @@ fun endingScene(players: MutableList<String>, currentTurn: Int) {
             "is so precious and mysterious that Melon Ausk is willing to pay an absurd amount of money to grant the coin as his own. \n" +
             "This amount of money is enough for ${players[currentTurn]} to live happily without the need to work again, as well as enough\n" +
             "to pass this comfortable lifestyle to the next few generations of theirs.\n" +
-            "${players[currentTurn]} have won the shortcut to wealthiness!\n".bold().italic() +
+            "${players[currentTurn]} have won the shortcut to wealth!\n".bold().italic() +
             "\n" +
             "${players[currentTurn]} walks home while humming a happy song, but only if they know that ${players[loser]} is furious by their defeat.\n" +
-            "${players[loser]} lurks in the dark watching every step of ${players[currentTurn]}. Fist clenched, ${players[loser]} wonder and hope\n" +
+            "${players[loser]} lurks in the dark watching every step of ${players[currentTurn]}. Fist clenched, ${players[loser]} wonders and hopes\n" +
             "for the day that they will get their REVENGE!\n" +
             "\n" +
             "THE END\n".italic())
