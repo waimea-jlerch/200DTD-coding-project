@@ -200,166 +200,178 @@ fun rules() {
 
 // grid and coin selector
 fun setupGame(grid: MutableList<String>) {
-    println()
-    println("---------------------------------------------------------------------------------------------------------------------------------------")
-
-    var gridSize = 0
-    var coinsNumber = 0
-
-    while(true) {
+    // Outer loop to restart the entire setup if "N" is selected
+    while (true) {
         println()
-        println("✦ SELECT YOUR CAVE! ✦".bold())
-        println("┌───────────────────────────────────────┐\n".grey() +
+        println("---------------------------------------------------------------------------------------------------------------------------------------")
+
+        var gridSize = 0
+        var coinsNumber = 0
+
+        while (true) {
+            println()
+            println("✦ SELECT YOUR CAVE! ✦".bold())
+            println(
+                "┌───────────────────────────────────────┐\n".grey() +
                 "│ Note: Recommended Cave is 'THE Cave'! │\n".grey() +
-                "└───────────────────────────────────────┘"  .grey())
-        println()
+                "└───────────────────────────────────────┘".grey()
+            )
+            println()
 
-        // option 1
-        print("[1] SMALL Cave (12 squares & 5 coins):")
-        println(" $goldCoin $silverCoin $silverCoin $silverCoin $silverCoin ")
-        println()
-        // option 2
-        print("[2] THE Cave   (20 squares & 6 coins):")
-        println(" $goldCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin")
-        println()
-        // option 3
-        print("[3] BIG Cave   (25 squares & 8 coins):")
-        println(" $goldCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin")
-        println()
-        // custom
-        print("[4] Custom     (Make your own cave!):")
-        println("  $goldCoin? $silverCoin?")
-        println()
+            // option 1
+            print("[1] SMALL Cave (12 squares & 5 coins):")
+            println(" $goldCoin $silverCoin $silverCoin $silverCoin $silverCoin ")
+            println()
+            // option 2
+            print("[2] THE Cave   (20 squares & 6 coins):")
+            println(" $goldCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin")
+            println()
+            // option 3
+            print("[3] BIG Cave   (25 squares & 8 coins):")
+            println(" $goldCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin $silverCoin")
+            println()
+            // custom
+            print("[4] Custom     (Make your own cave!):")
+            println("  $goldCoin? $silverCoin?")
+            println()
 
-        print("Option: ")
-        val caveOption = readln() // kept as string to be able to check or invalids
+            print("Option: ")
+            val caveOption = readln() // kept as string to be able to check or invalids
 
-        when (caveOption) {
-            "1" -> {
-                gridSize = 12
-                coinsNumber = 5
-                break
-            }
+            when (caveOption) {
+                "1" -> {
+                    gridSize = 12
+                    coinsNumber = 5
+                    break
+                }
 
-            "2" -> {
-                gridSize = 20
-                coinsNumber = 6
-                break
-            }
+                "2" -> {
+                    gridSize = 20
+                    coinsNumber = 6
+                    break
+                }
 
-            "3" -> {
-                gridSize = 25
-                coinsNumber = 8
-                break
-            }
+                "3" -> {
+                    gridSize = 25
+                    coinsNumber = 8
+                    break
+                }
 
-            "4" -> {
-                println()
-                println()
-                println("✦ CUSTOM SETTINGS ✦".bold()) // heading
-                println("┌─────────────────────────────────────────────────────────────────────────────────────┐\n" +
+                "4" -> {
+                    println()
+                    println()
+                    println("✦ CUSTOM SETTINGS ✦".bold()) // heading
+                    println(
+                        "┌─────────────────────────────────────────────────────────────────────────────────────┐\n" +
                         "│   Note:                                                                             │\n" +
                         "│  - Max cave size is 60                                                              │\n" +
                         "│  - Min cave size is 5                                                               │\n" +
                         "│  - Coins number cannot exceed and must be at least 2 less than cave size            │\n" +
                         "│  - If any invalid input is detected you are required to enter everything in again.  │\n" +
-                        "└─────────────────────────────────────────────────────────────────────────────────────┘")
+                        "└─────────────────────────────────────────────────────────────────────────────────────┘"
+                    )
 
-                while (true) {
-                    // Get input for grid size
-                    println()
-                    print("1) Enter your desired cave grid size: ")
-                    val customGridSize = readln().toIntOrNull()
-
-                    // Check if newGridSize is valid
-                    if (customGridSize == null || customGridSize <= 0) {
+                    while (true) {
+                        // Get input for grid size
                         println()
-                        println("Invalid input! Grid size can only be a positive number.".red())
-                        continue // Ask for the input again
-                    }
-                    else if (customGridSize >= 60) {
-                        println()
-                        println("Invalid input! Cave is too big! (max size = 60)".red())
-                        continue // Ask for the input again
-                    }
-                    else if (customGridSize < 5 && customGridSize > 0) {
-                        println()
-                        println("Invalid input! Cave is too small! (min size = 5).".red())
-                        continue // Ask for the input again
-                    }
+                        print("1) Enter your desired cave grid size: ")
+                        val customGridSize = readln().toIntOrNull()
 
-                    // Get input for total number of coins
-                    println()
-                    print("2) Enter your desired total number of coins: ")
-                    val customCoinsNumber = readln().toIntOrNull()
-
-                    // Check if newCoinsNumber is valid
-                    if (customCoinsNumber == null || customCoinsNumber < 0 || customCoinsNumber > customGridSize - 2) {
-                        println()
-                        println("Invalid input! Number of coins can only be a positive number that is at least 2 less than the grid size number.".red())
-                        continue // Ask for the input again
-                    }
-
-                    println()
-
-                    // Confirmation
-                    print("Confirm these custom settings? [Y]es / [N]o: ")
-                    val confirm = readln().uppercase().firstOrNull()?.toString()
-
-                    when (confirm) {
-                        "Y" -> {
-                            // Update existing variables with new values
-                            gridSize = customGridSize
-                            coinsNumber = customCoinsNumber
-                            break // Exit the loop after confirmation
+                        // Check if newGridSize is valid
+                        if (customGridSize == null || customGridSize <= 0) {
+                            println()
+                            println("Invalid input! Grid size can only be a positive number.".red())
+                            continue // Ask for the input again
+                        } else if (customGridSize > 60) {
+                            println()
+                            println("Invalid input! Cave is too big! (max size = 60)".red())
+                            continue // Ask for the input again
+                        } else if (customGridSize < 5 && customGridSize > 0) {
+                            println()
+                            println("Invalid input! Cave is too small! (min size = 5).".red())
+                            continue // Ask for the input again
                         }
-                        "N" -> {
-                            setupGame(grid)
-                            break
-                            // not confirm, so go back to options
+
+                        // Get input for total number of coins
+                        println()
+                        print("2) Enter your desired total number of coins: ")
+                        val customCoinsNumber = readln().toIntOrNull()
+
+                        // Check if newCoinsNumber is valid
+                        if (customCoinsNumber == null || customCoinsNumber < 0 || customCoinsNumber > customGridSize - 2) {
+                            println()
+                            println("Invalid input! Number of coins can only be a positive number that is at least 2 less than the grid size number.".red())
+                            continue // Ask for the input again
                         }
-                        else -> {
-                            println("Invalid! Please choose either [Y]es or [N]o.".red())
+
+                        println()
+
+                        // Confirmation
+                        print("Confirm these custom settings? [Y]es / [N]o: ")
+                        val confirm = readln().uppercase().firstOrNull()?.toString()
+
+                        when (confirm) {
+                            "Y" -> {
+                                // Update existing variables with new values
+                                gridSize = customGridSize
+                                coinsNumber = customCoinsNumber
+                                break // Exit the loop after confirmation
+                            }
+
+                            "N" -> {
+                                println("Going back to the Cave Selection menu...")
+                                break
+                                // not confirm, so go back to options
+                            }
+
+                            else -> {
+                                println("Invalid! Please choose either [Y]es or [N]o.".red())
+                            }
                         }
                     }
+                    // After confirmation or "N", go back to the start of the game setup
+                    if (gridSize == 0 || coinsNumber == 0) continue  // Restart the game setup if gridSize is still 0
+                    break // Continue with building the grid after valid settings
                 }
-                break // continue with building the grid
-            }
 
-            else -> {
-                println()
-                println("That cave does not exist!".italic().red())
-                println()
+                else -> {
+                    println()
+                    println("That cave does not exist!".italic().red())
+                    println()
+                }
             }
         }
-    }
 
-    // Build the grid
-    for (i in 0 until gridSize) {
-        grid.add(space)
-    }
+        // Build the grid
+        for (i in 0 until gridSize) {
+            grid.add(space)
+        }
 
-    // Create a set to track occupied positions
-    val occupiedPositions = mutableSetOf<Int>()
+        // Create a set to track occupied positions
+        val occupiedPositions = mutableSetOf<Int>()
 
-    // Place silver coins
-    repeat(coinsNumber - 1) { // Place silver coins
+        // Place silver coins
+        repeat(coinsNumber - 1) { // Place silver coins
+            var position: Int
+            do {
+                position = (1 until gridSize).random() // Random position for silver coins
+            } while (!occupiedPositions.add(position)) // Continue until a free space is found
+            grid[position] = silverCoin
+        }
+
+        // Place gold coin
         var position: Int
         do {
-            position = (1 until gridSize).random() // Random position for silver coins
-        } while (!occupiedPositions.add(position)) // Continue until a free space is found
-        grid[position] = silverCoin
+            position = (1 until gridSize).random() // Random position for gold coin
+        } while (!occupiedPositions.add(position)) // make sure it's a free space
+        grid[position] = goldCoin
+
+        println()
+        println("---------------------------------------------------------------------------------------------------------------------------------------")
+
+        break // Exit the outer loop and finish the game setup process
+
     }
-
-    // Place gold coin
-    var position: Int
-    do {
-        position = (1 until gridSize).random() // Random position for gold coin
-    } while (!occupiedPositions.add(position)) // make sure it's a free space
-    grid[position] = goldCoin
-
-    println()
-    println("---------------------------------------------------------------------------------------------------------------------------------------")
 }
 
 // Game grid formatting
@@ -436,8 +448,8 @@ fun moveCoin (grid: MutableList<String> ,players: MutableList<String>, currentTu
                 }
 
                 "N" -> {
-                    moveCoin(grid, players, currentTurn)
-                    return currentTurn
+                    // Restart the function
+                    return moveCoin(grid, players, currentTurn)
                 }
 
                 else -> {
